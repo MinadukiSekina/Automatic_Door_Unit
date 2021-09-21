@@ -1,6 +1,11 @@
 # Automatic_Door_Unit
 VRChat World（SDK3）用自動ドアのギミックです。
 
+# 必須項目
+* Unity 2019.4.30f1
+* 最新の VRChat SDK3
+* 最新の UdonSharp
+
 # 使用方法
 1. インポート後、「Automatic_Door_Unit」プレハブをシーンへ配置
 2. Target に動かしたいオブジェクトを、Destination に移動先の座標（グローバル座標）を指定
