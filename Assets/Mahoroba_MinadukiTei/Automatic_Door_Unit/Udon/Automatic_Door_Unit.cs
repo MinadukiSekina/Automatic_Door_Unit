@@ -1,15 +1,16 @@
-﻿
-using UdonSharp;
+﻿using UdonSharp;
 using UnityEngine;
 using VRC.SDKBase;
 using VRC.Udon;
 
-namespace MinadukiTei
+namespace MinadukiTei.Products
 {
     [UdonBehaviourSyncMode(BehaviourSyncMode.Manual)]
     public class Automatic_Door_Unit : UdonSharpBehaviour
     {
-        // 動かす対象と目的地（グローバル座標）は指定してもらう
+        // User set target object and position of destination.
+        // Value of transform synchronize automatically,
+        // so default position and player count is defined as synchronizing variable.
         [SerializeField] private GameObject target;
         [SerializeField] private Vector3 destination;
         [UdonSynced(UdonSyncMode.None)] private Vector3 defaultPosition;
@@ -17,23 +18,22 @@ namespace MinadukiTei
 
         void Start()
         {
-            // 初期化
-            //if (target is null) target = new GameObject("Target");
+            // Initialize position and player count.
             defaultPosition = target.transform.position;
             triggerPlayerCount = 0;
         }
 
         private void Update()
         {
-            if(triggerPlayerCount == 0)
+            if (triggerPlayerCount == 0)
             {
-                // 誰も触れていないなら元の位置に戻す
+                // If nobody is here, reset position.
                 if (target.transform.position == defaultPosition) return;
                 target.transform.position = Vector3.MoveTowards(target.transform.position, defaultPosition, Time.deltaTime);
             }
             else
             {
-                // 誰かが触れているなら目標の位置に動かす
+                // If anyone is here, move object.
                 if (target.transform.position == destination) return;
                 target.transform.position = Vector3.MoveTowards(target.transform.position, destination, Time.deltaTime);
             }
@@ -42,12 +42,12 @@ namespace MinadukiTei
         {
             if (Networking.IsOwner(player, target))
             {
-                // オブジェクトのオーナーなら純粋にカウントアップ
+                // If player is owner, just counts up.
                 CountUp();
             }
             else
             {
-                // オブジェクトのオーナーでなければオブジェクトのオーナーに実行要求
+                // If player is not owner, owner does.
                 SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, nameof(CountUp));
             }
         }
@@ -56,26 +56,26 @@ namespace MinadukiTei
         {
             if (Networking.IsOwner(player, target))
             {
-                // オブジェクトのオーナーなら純粋にカウントダウン
+                // If player is owner, just counts down.
                 CountDown();
             }
             else
             {
-                // オブジェクトのオーナーでなければオブジェクトのオーナーに実行要求
+                // If player is not owner, owner does.
                 SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.Owner, nameof(CountDown));
             }
         }
 
         public void CountUp()
         {
-            // 人数をプラスして、同期要求
+            // Add player count, and request others to synchronize 
             triggerPlayerCount += 1;
             RequestSerialization();
         }
 
         public void CountDown()
         {
-            // 人数をマイナスして、同期要求
+            // Subtract player count, and request others to synchronize 
             triggerPlayerCount -= 1;
             if (triggerPlayerCount < 0) triggerPlayerCount = 0;
             RequestSerialization();
