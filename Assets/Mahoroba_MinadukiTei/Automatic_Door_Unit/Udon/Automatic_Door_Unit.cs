@@ -40,7 +40,7 @@ namespace MinadukiTei.Products
         }
         public override void OnPlayerTriggerEnter(VRCPlayerApi player)
         {
-            if (Networking.IsOwner(player, target))
+            if (Networking.IsOwner(player, this.gameObject))
             {
                 // If player is owner, just counts up.
                 CountUp();
@@ -54,7 +54,7 @@ namespace MinadukiTei.Products
 
         public override void OnPlayerTriggerExit(VRCPlayerApi player)
         {
-            if (Networking.IsOwner(player, target))
+            if (Networking.IsOwner(player, this.gameObject))
             {
                 // If player is owner, just counts down.
                 CountDown();
