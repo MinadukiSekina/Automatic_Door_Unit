@@ -10,7 +10,7 @@ namespace MinadukiTei.Products
     {
         // User set target object and position of destination.
         // Value of transform synchronize automatically,
-        // so default position and player count is defined as synchronizing variable.
+        // so default position and player count is defined as synchronizing variable for late joiner.
         [SerializeField] private GameObject target;
         [SerializeField] private Vector3 destination;
         [UdonSynced(UdonSyncMode.None)] private Vector3 defaultPosition;

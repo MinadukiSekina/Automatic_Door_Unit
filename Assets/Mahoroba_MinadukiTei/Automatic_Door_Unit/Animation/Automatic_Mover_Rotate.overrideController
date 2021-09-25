@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Automatic_Mover_Rotate
+  m_Controller: {fileID: 9100000, guid: a304704334298064cab4b6df0758952c, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: fa1142e4537723f45a15e0cc7ba2d8ab, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 453a4651c591fcc4c9938c5a7aa294ca, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: cab5435972179cc4b9c9e3ccc5030188, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 83d88e2c5b9d6fc47983044bd944f12c, type: 2}
